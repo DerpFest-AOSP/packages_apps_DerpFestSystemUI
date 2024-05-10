@@ -43,7 +43,6 @@ import com.android.systemui.plugins.qs.QSFactory;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.power.dagger.PowerModule;
 import com.android.systemui.qs.dagger.QSModule;
-import com.android.systemui.qs.tileimpl.QSFactoryImpl;
 import com.android.systemui.reardisplay.RearDisplayModule;
 import com.android.systemui.recents.Recents;
 import com.android.systemui.recents.RecentsImplementation;
@@ -83,6 +82,7 @@ import com.android.systemui.unfold.UnfoldTransitionModule;
 import com.android.systemui.volume.dagger.VolumeModule;
 import com.android.systemui.wallpapers.dagger.WallpaperModule;
 
+import org.derpfest.systemui.qs.tileimpl.DerpFestQSFactoryImpl;
 import org.derpfest.systemui.qs.tileimpl.DerpFestQSModule;
 
 import dagger.Binds;
@@ -161,7 +161,7 @@ public abstract class DerpFestSystemUIModule {
     /** */
     @Binds
     @SysUISingleton
-    public abstract QSFactory bindQSFactory(QSFactoryImpl qsFactoryImpl);
+    public abstract QSFactory bindQSFactory(DerpFestQSFactoryImpl qsFactoryImpl);
 
     @Binds
     abstract DockManager bindDockManager(DockManagerImpl dockManager);

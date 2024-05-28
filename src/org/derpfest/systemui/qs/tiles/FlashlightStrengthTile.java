@@ -169,7 +169,14 @@ public class FlashlightStrengthTile extends FlashlightTile implements TouchableQ
         if (mSupportsSettingFlashLevel && newState) {
             try {
                 int level = (int) (mCurrentPercent * ((float) mMaxLevel));
-                if (level == 0) {
+                // Not all devices has 100 light level so in that case, it will attain level 0
+                // before 0%. We don't want flashlight is getting off other than 0%.
+                // Make sure level won't go below 1.
+                level = Math.max(level, 1);
+                // Current percent won't below 1%
+                // for just in case.
+                float percent = mCurrentPercent * 100f;
+                if (percent == 0f) {
                     mFlashlightController.setFlashlight(false);
                     newState = false;
                 } else {

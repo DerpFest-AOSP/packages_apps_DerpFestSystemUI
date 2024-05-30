@@ -61,7 +61,7 @@ public class FlashlightStrengthTile extends FlashlightTile implements TouchableQ
 
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (!mSupportsSettingFlashLevel) return false;
+                    if (!mSupportsSettingFlashLevel || !mState.value) return false;
 
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_DOWN -> {

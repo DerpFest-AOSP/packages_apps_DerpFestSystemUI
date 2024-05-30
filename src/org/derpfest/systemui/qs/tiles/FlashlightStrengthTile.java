@@ -194,11 +194,14 @@ public class FlashlightStrengthTile extends FlashlightTile implements TouchableQ
     protected void handleUpdateState(BooleanState state, Object arg) {
         super.handleUpdateState(state, arg);
         if (mSupportsSettingFlashLevel) {
-            state.label =
-                    String.format(
-                            "%s - %s%%",
-                            mHost.getContext().getString(R.string.quick_settings_flashlight_label),
-                            Math.round(mCurrentPercent * 100f));
+            String label = mHost.getContext().getString(R.string.quick_settings_flashlight_label);
+            if (state.value) {
+                label = String.format(
+                        "%s - %s%%",
+                        mHost.getContext().getString(R.string.quick_settings_flashlight_label),
+                        Math.round(mCurrentPercent * 100f));
+            }
+            state.label = label;
         }
     }
 

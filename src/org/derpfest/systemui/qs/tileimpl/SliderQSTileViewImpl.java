@@ -52,6 +52,9 @@ public class SliderQSTileViewImpl extends QSTileViewImpl {
     private SettingObserver mSettingObserver;
     private boolean enabled = false;
 
+    private final static int ACTIVE_STATE_PERCENTAGE_ALPHA = 64;
+    private final static int INACTIVE_STATE_PERCENTAGE_ALPHA = 0;
+
     public SliderQSTileViewImpl(
             Context context,
             QSIconView icon,
@@ -62,7 +65,7 @@ public class SliderQSTileViewImpl extends QSTileViewImpl {
         if (touchListener != null && !settingKey.isEmpty()) {
             mSettingsKey = settingKey;
             percentageDrawable = new PercentageDrawable();
-            percentageDrawable.setAlpha(64);
+            percentageDrawable.setTint(Color.WHITE);
             updatePercentBackground(false /* default */);
             mSettingObserver = new SettingObserver(new Handler(Looper.getMainLooper()));
             setOnTouchListener(touchListener);
@@ -85,7 +88,9 @@ public class SliderQSTileViewImpl extends QSTileViewImpl {
     }
 
     private void updatePercentBackground(boolean active) {
-        percentageDrawable.setTint(active ? Color.WHITE : Color.BLACK);
+        // Hide the percentage when inactive.
+        percentageDrawable.setAlpha(active ? ACTIVE_STATE_PERCENTAGE_ALPHA
+                : INACTIVE_STATE_PERCENTAGE_ALPHA);
         LayerDrawable layerDrawable =
                 new LayerDrawable(new Drawable[] {colorBackgroundDrawable, percentageDrawable});
         setBackground(layerDrawable);

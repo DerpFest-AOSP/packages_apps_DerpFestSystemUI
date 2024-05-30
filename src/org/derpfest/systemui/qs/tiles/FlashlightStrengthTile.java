@@ -46,6 +46,7 @@ public class FlashlightStrengthTile extends FlashlightTile implements TouchableQ
     private final CameraManager mCameraManager;
     private final FlashlightController mFlashlightController;
     private boolean mSupportsSettingFlashLevel;
+    private int mDefaultLevel;
     private int mMaxLevel;
     private float mCurrentPercent;
     private boolean mClicked = true;
@@ -127,7 +128,6 @@ public class FlashlightStrengthTile extends FlashlightTile implements TouchableQ
                 flashlightController);
         mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         mFlashlightController = flashlightController;
-        int mDefaultLevel;
         try {
             mCameraId = getCameraId();
             CameraCharacteristics characteristics =
@@ -161,6 +161,11 @@ public class FlashlightStrengthTile extends FlashlightTile implements TouchableQ
     @Override
     public String getSettingsSystemKey() {
         return "flashlight_brightness";
+    }
+
+    @Override
+    public float getSettingsDefaultValue() {
+        return ((float) mDefaultLevel) / ((float) mMaxLevel);
     }
 
     @Override

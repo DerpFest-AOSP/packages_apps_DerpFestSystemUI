@@ -60,11 +60,12 @@ public class SliderQSTileViewImpl extends QSTileViewImpl {
             QSIconView icon,
             boolean collapsed,
             View.OnTouchListener touchListener,
-            String settingKey) {
+            String settingKey,
+            float settingsDefaultValue) {
         super(context, icon, collapsed);
         if (touchListener != null && !settingKey.isEmpty()) {
             mSettingsKey = settingKey;
-            percentageDrawable = new PercentageDrawable();
+            percentageDrawable = new PercentageDrawable(settingsDefaultValue);
             percentageDrawable.setTint(Color.WHITE);
             updatePercentBackground(false /* default */);
             mSettingObserver = new SettingObserver(new Handler(Looper.getMainLooper()));
@@ -111,16 +112,18 @@ public class SliderQSTileViewImpl extends QSTileViewImpl {
     private class PercentageDrawable extends Drawable {
         private Drawable shape;
         private float mCurrentPercent;
+        private float mDefaultPercent;
 
-        private PercentageDrawable() {
+        private PercentageDrawable(float defaultPercent) {
             shape = mContext.getDrawable(R.drawable.qs_tile_background_shape);
-            mCurrentPercent =
-                    Settings.System.getFloat(mContext.getContentResolver(), mSettingsKey, 0.01f);
+            mDefaultPercent = defaultPercent;
+            mCurrentPercent = Settings.System.getFloat(mContext.getContentResolver(),
+                    mSettingsKey, mDefaultPercent);
         }
 
         synchronized void updatePercent() {
-            mCurrentPercent =
-                    Settings.System.getFloat(mContext.getContentResolver(), mSettingsKey, 0.01f);
+            mCurrentPercent = Settings.System.getFloat(mContext.getContentResolver(),
+                    mSettingsKey, mDefaultPercent);
         }
 
         @Override

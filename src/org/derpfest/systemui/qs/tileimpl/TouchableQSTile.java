@@ -8,4 +8,6 @@ public interface TouchableQSTile {
     View.OnTouchListener getTouchListener();
 
     String getSettingsSystemKey();
+
+    float getSettingsDefaultValue();
 }
